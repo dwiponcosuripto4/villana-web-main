@@ -1,0 +1,12 @@
+-- CREATE TYPE "public"."search_index_type" AS ENUM('villa', 'city');--> statement-breakpoint
+-- CREATE TABLE "search_index" (
+-- 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+-- 	"idx_type" "search_index_type" NOT NULL,
+-- 	"villa_id" integer,
+-- 	"city_id" varchar(10),
+-- 	"text" varchar(1000) NOT NULL
+-- );
+-- --> statement-breakpoint
+-- ALTER TABLE "search_index" ADD CONSTRAINT "search_index_villa_id_villa_id_fk" FOREIGN KEY ("villa_id") REFERENCES "public"."villa"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+-- ALTER TABLE "search_index" ADD CONSTRAINT "search_index_city_id_city_id_fk" FOREIGN KEY ("city_id") REFERENCES "public"."city"("id") ON DELETE cascade ON UPDATE no action;--> statement-breakpoint
+-- CREATE INDEX "fulltext_idx" ON "search_index" USING gin (to_tsvector('english', "text"));

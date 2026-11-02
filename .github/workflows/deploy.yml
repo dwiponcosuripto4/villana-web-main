@@ -1,0 +1,127 @@
+# GitHub workflow for CI/CD deployment
+# Deploys SvelteKit application to server using rsync
+
+name: deploy
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "README.md"
+      - ".github"
+      - "docs"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: "Setup Bun.js"
+        uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: bun install
+
+      # - name: Setup Node.js
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: "20"
+      #     cache: "npm"
+      #
+      # - name: Install dependencies
+      #   run: npm install --legacy-peer-deps
+
+      - name: Build application
+        env:
+          DATABASE_URL: "${{ secrets.DATABASE_URL }}"
+        run: bun run build
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: unnecessary
+
+      - name: Adding Known Hosts
+        run:
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} -H ${{ secrets.SSH_HOST }} >>
+          ~/.ssh/known_hosts
+
+      - name: Deploy build with rsync
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches:
+            -avzrhcP --exclude=node_modules --exclude=.git --exclude=.github
+            --exclude=src --exclude=static --exclude=.svelte-kit --exclude=tests
+            --exclude=e2e --exclude=package-lock.json --chown=${{
+            secrets.SSH_USERNAME }}:${{ secrets.SSH_USERNAME }}
+          path: ./build/
+          remote_path: ${{ secrets.REMOTE_PATH }}/
+          remote_host: ${{ secrets.SSH_HOST }}
+          remote_port: ${{ secrets.SSH_PORT }}
+          remote_user: ${{ secrets.SSH_USERNAME }}
+          remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy package.json
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches:
+            -avzrhcP --chown=${{ secrets.SSH_USERNAME }}:${{
+            secrets.SSH_USERNAME }}
+          path: ./package.json
+          remote_path: ${{ secrets.REMOTE_PATH }}/
+          remote_host: ${{ secrets.SSH_HOST }}
+          remote_port: ${{ secrets.SSH_PORT }}
+          remote_user: ${{ secrets.SSH_USERNAME }}
+          remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy dev with rsync
+        uses: burnett01/rsync-deployments@7.0.1
+        with:
+          switches:
+            -avzrhcP --exclude=node_modules --exclude=.git --exclude=.github
+            --exclude=static --exclude=.svelte-kit --exclude=tests --exclude=e2e
+            --exclude=build/ --chown=${{ secrets.SSH_USERNAME }}:${{
+            secrets.SSH_USERNAME }}
+          path: ./
+          remote_path: ${{ secrets.REMOTE_DEV_PATH }}/
+          remote_host: ${{ secrets.SSH_HOST }}
+          remote_port: ${{ secrets.SSH_PORT }}
+          remote_user: ${{ secrets.SSH_USERNAME }}
+          remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Install production dependencies on server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ${{ secrets.REMOTE_PATH }}
+            bun ci --omit=dev --legacy-peer-deps
+
+      - name: Migrate database if needed
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ${{ secrets.REMOTE_DEV_PATH }}/ && bun run db:migrate
+
+      - name: Restart application server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            systemctl restart postgresql
+            systemctl restart villana-web
+            echo "Application deployed successfully."

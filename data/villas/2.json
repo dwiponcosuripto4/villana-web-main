@@ -1,0 +1,123 @@
+{
+  "villa": {
+    "title": "EDGE Premium Homestay",
+    "slug": "edge-premium-homestay",
+    "priceMin": "650",
+    "priceMax": "1200",
+    "unitsCount": 1,
+    "bedroomMin": 3,
+    "bedroomMax": 4,
+    "hasAc": true,
+    "hasBathtub": false,
+    "hasTv": true,
+    "hasBreakfast": true,
+    "description": "Edge Premium Homestay menawarkan pengalaman menginap eksklusif di Wonosobo dengan pemandangan Telaga Menjer, udara pegunungan yang sejuk, dan suasana tenang. Setiap kamar dilengkapi balkon pribadi dengan view danau, AC, WiFi gratis, serta sarapan pagi yang lezat.",
+    "address": "Jl. Telaga Menjer Km 01, Desa Tlogo, Garung, Wonosobo, Jawa Tengah, Indonesia",
+    "latitude": "-7.3133",
+    "longitude": "109.9124",
+    "city": "Wonosobo",
+    "province": "Jawa Tengah",
+    "phoneNumber": "+62-813-2712-4567",
+    "status": "published",
+    "googleMapsLink": "https://maps.app.goo.gl/TwfHTmwLjrWEBrxD7",
+    "viewCount": 1243
+  },
+  "images": [
+    {
+      "imageUrl": "/images/villas/2/1.webp",
+      "thumbnailUrl": "/images/villas/2/1.webp",
+      "altText": "Tampak depan Edge Premium Homestay dengan pemandangan Telaga Menjer",
+      "orderIndex": 1
+    },
+    {
+      "imageUrl": "/images/villas/2/2.webp",
+      "thumbnailUrl": "/images/villas/2/2.webp",
+      "altText": "Kamar deluxe dengan balkon menghadap danau",
+      "orderIndex": 2
+    },
+    {
+      "imageUrl": "/images/villas/2/3.webp",
+      "thumbnailUrl": "/images/villas/2/3.webp",
+      "altText": "Ruang santai dengan jendela besar dan view pegunungan",
+      "orderIndex": 3
+    },
+    {
+      "imageUrl": "/images/villas/2/4.webp",
+      "thumbnailUrl": "/images/villas/2/4.webp",
+      "altText": "Area kolam renang dengan panorama alam Wonosobo",
+      "orderIndex": 4
+    }
+  ],
+  "bedSizes": [
+    {
+      "bedSize": "Queen",
+      "quantity": 2
+    },
+    {
+      "bedSize": "King",
+      "quantity": 2
+    }
+  ],
+  "amenities": [
+    {
+      "name": "Lake View",
+      "description": "Pemandangan langsung ke Telaga Menjer dan Gunung Sindoro",
+      "category": "scenery"
+    },
+    {
+      "name": "Swimming Pool",
+      "description": "Kolam renang dengan pemandangan danau",
+      "category": "pool"
+    },
+    {
+      "name": "Daily Breakfast",
+      "description": "Sarapan gratis setiap pagi (nasi goreng, buah, roti, jus)",
+      "category": "breakfast"
+    },
+    {
+      "name": "Free WiFi",
+      "description": "Koneksi internet gratis di seluruh area homestay",
+      "category": "connectivity"
+    },
+    {
+      "name": "Private Balcony",
+      "description": "Setiap kamar memiliki balkon pribadi dengan view danau",
+      "category": "access"
+    },
+    {
+      "name": "Air Conditioning",
+      "description": "Setiap kamar dilengkapi dengan pendingin udara (AC)",
+      "category": "AC"
+    },
+    {
+      "name": "Free Parking",
+      "description": "Lahan parkir luas dan gratis untuk tamu",
+      "category": "park"
+    },
+    {
+      "name": "Hot Water Shower",
+      "description": "Kamar mandi dilengkapi pemanas air",
+      "category": "bathroom"
+    },
+    {
+      "name": "Water Sports Equipment",
+      "description": "Penyewaan perahu dan alat memancing",
+      "category": "equipment-complimentary"
+    },
+    {
+      "name": "Welcome Tea",
+      "description": "Teh hangat dan camilan selamat datang",
+      "category": "welcome-complimentary"
+    },
+    {
+      "name": "Daily Cleaning",
+      "description": "Pembersihan kamar dan pergantian handuk",
+      "category": "housekeeping"
+    },
+    {
+      "name": "Mountain View",
+      "description": "Pemandangan pegunungan dari area umum",
+      "category": "scenery"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+ALTER TABLE "search_index" RENAME COLUMN "villa_slug" TO "slug";

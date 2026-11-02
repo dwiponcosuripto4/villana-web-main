@@ -1,0 +1,3 @@
+-- ALTER TABLE "villa" ADD COLUMN "person_capacity_min" integer DEFAULT 0 NOT NULL;--> statement-breakpoint
+-- ALTER TABLE "villa" ADD COLUMN "person_capacity_max" integer DEFAULT 0 NOT NULL;--> statement-breakpoint
+-- ALTER TABLE "villa" ADD COLUMN "updated_system_at" timestamp with time zone;

@@ -1,0 +1,1 @@
+ALTER TABLE "search_index" ADD COLUMN "villa_slug" varchar(200);

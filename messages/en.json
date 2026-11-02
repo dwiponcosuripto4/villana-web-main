@@ -1,0 +1,12 @@
+{
+  "$schema": "https://inlang.com/schema/inlang-message-format",
+  "hello_world": "Hello, {name} from en!",
+  "facility": "Facility",
+  "air_cond": "Air Conditioning",
+  "location": "Location",
+  "compare": "Compare",
+  "nearby_places": "Nearby Places ({count})",
+  "search_villa_placeholder": "Search for a villa...",
+  "no_account_yet": "Don't have an account?",
+  "register_here": "Register here"
+}

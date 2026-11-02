@@ -1,0 +1,137 @@
+{
+  "villa": {
+    "title": "Krasan Villa",
+    "slug": "krasan-villa",
+    "priceMin": "800",
+    "priceMax": "1900",
+    "unitsCount": 5,
+    "bedroomMin": 1,
+    "bedroomMax": 2,
+    "hasAc": false,
+    "hasBathtub": true,
+    "hasTv": true,
+    "hasBreakfast": true,
+    "description": "Modern Villa with Astonishing View of Telaga Menjer and Mount Sindoro. Enjoy a peaceful retreat with luxurious amenities, perfect for families and couples seeking tranquility in nature.",
+    "address": "Telaga Menjer, Maron, Garung, Wonosobo, Jawa Tengah, Indonesia",
+    "city": "Wonosobo",
+    "province": "Jawa Tengah",
+    "latitude": "18.2208",
+    "longitude": "-66.5901",
+    "phoneNumber": "+62 823-2619-6144",
+    "status": "published",
+    "googleMapsLink": "https://maps.app.goo.gl/cL8SniKGGDaUD3T78",
+    "viewCount": 847
+  },
+  "images": [
+    {
+      "imageUrl": "/images/villas/1/4.webp",
+      "thumbnailUrl": "/images/villas/1/4.webp",
+      "altText": "Luxury beachfront villa exterior with infinity pool",
+      "orderIndex": 1
+    },
+    {
+      "imageUrl": "/images/villas/1/2.webp",
+      "thumbnailUrl": "/images/villas/1/2.webp",
+      "altText": "Spacious living room with ocean view",
+      "orderIndex": 2
+    },
+    {
+      "imageUrl": "/images/villas/1/1.webp",
+      "thumbnailUrl": "/images/villas/1/1.webp",
+      "altText": "Master bedroom with king-size bed",
+      "orderIndex": 3
+    },
+    {
+      "imageUrl": "/images/villas/1/3.webp",
+      "thumbnailUrl": "/images/villas/1/3.webp",
+      "altText": "Gourmet kitchen with modern appliances",
+      "orderIndex": 4
+    }
+  ],
+  "videos": [
+    {
+      "videoUrl": "/videos/villas/1/1.mp4",
+      "thumbnailUrl": "/images/villas/1/1.webp",
+      "altText": "Villa tour video",
+      "store": "local",
+      "orderIndex": 1
+    }
+  ],
+  "bedSizes": [
+    {
+      "bedSize": "King",
+      "quantity": 2
+    },
+    {
+      "bedSize": "Queen",
+      "quantity": 2
+    }
+  ],
+  "amenities": [
+    {
+      "name": "Daily Housekeeping",
+      "description": "24/7 concierge and daily housekeeping",
+      "category": "housekeeping"
+    },
+    {
+      "name": "High-Speed WiFi",
+      "description": "High-speed internet and smart TVs",
+      "category": "connectivity"
+    },
+    {
+      "name": "Smart TV with Netflix",
+      "description": "Smart TV with streaming services including Netflix",
+      "category": "entertainment"
+    },
+    {
+      "name": "Teleskop Bintang",
+      "description": "Teleskop untuk mengamati bintang di malam hari dan gunung di kejauhan.",
+      "category": "equipment-complimentary"
+    },
+    {
+      "name": "View Danau dan Gunung",
+      "description": "View langsung ke Telaga Menjer dan Gunung Sindoro dari setiap balkon villa",
+      "category": "scenery"
+    },
+    {
+      "name": "Welcome Drinks",
+      "description": "Complimentary welcome refreshments upon arrival",
+      "category": "welcome-complimentary"
+    },
+    {
+      "name": "Private Parking",
+      "description": "Parkir pribadi aman di depan villa",
+      "category": "parking"
+    },
+    {
+      "name": "Bath tub with Hot Water",
+      "description": "Bathtub dengan air hangat untuk relaksasi",
+      "category": "bathroom"
+    },
+    {
+      "name": "Luxury Bathroom Amenities",
+      "description": "Premium toiletries and plush towels",
+      "category": "bathroom"
+    },
+    {
+      "name": "Dry Kitchen",
+      "description": "Dry kitchen dengan peralatan memasak lengkap untuk tipe VVIP",
+      "category": "kitchen"
+    },
+    {
+      "name": "Tenda Anak",
+      "description": "Tenda bermain anak-anak untuk tipe Sindoro",
+      "category": "equipment-complimentary"
+    },
+    {
+      "name": "Kulkas Mini",
+      "description": "Kulkas mini untuk tipe Sindoro dan Semeru",
+      "category": "kitchen"
+    },
+    {
+      "name": "Private Balcony",
+      "description": "Setiap unit memiliki balkon pribadi untuk menikmati pemandangan danau",
+      "category": "access"
+    }
+  ]
+}

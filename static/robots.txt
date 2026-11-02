@@ -1,0 +1,16 @@
+# Villana.id Robots.txt
+# Allow crawling for all search engines
+
+User-agent: *
+Disallow: /dashboard/
+Disallow: /auth/
+Disallow: /demo/
+
+# Allow crawling of all villa and place pages
+Allow: /villa/
+Allow: /place/
+Allow: /places
+Allow: /explore
+
+# Sitemap location
+Sitemap: https://www.villana.id/sitemap.xml

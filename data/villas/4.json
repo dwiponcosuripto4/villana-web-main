@@ -1,0 +1,84 @@
+{
+  "villa": {
+    "title": "Bagas Luxury Camp",
+    "slug": "bagas-luxury-camp",
+    "priceMin": "600",
+    "priceMax": "1200",
+    "unitsCount": 10,
+    "bedroomMin": 1,
+    "bedroomMax": 2,
+    "hasAc": false,
+    "hasBathtub": false,
+    "hasTv": true,
+    "hasBreakfast": true,
+    "bedSize": "Queen",
+    "description": "Bagas Luxury Camp Telaga Menjer menawarkan pengalaman glamping mewah dengan panorama Telaga Menjer dan Gunung Sindoro. Setiap tenda dilengkapi kamar mandi dalam, air panas, WiFi, dan sarapan pagi. Lokasi berada di dataran tinggi Wonosobo dengan udara sejuk dan suasana alam yang tenang.",
+    "address": "Jl. Menjer, Desa Maron, Garung, Wonosobo, Jawa Tengah, Indonesia",
+    "latitude": "-7.3078",
+    "longitude": "109.9185",
+    "city": "Wonosobo",
+    "province": "Jawa Tengah",
+    "phoneNumber": "+62-852-2802-4485",
+    "status": "published",
+    "googleMapsLink": "https://maps.app.goo.gl/abKi6pqdq2AArmoR9",
+    "googleRating": 4.7,
+    "viewCount": 987
+  },
+  "images": [
+    {
+      "imageUrl": "/images/villas/4/1.webp",
+      "thumbnailUrl": "/images/villas/4/1.webp",
+      "altText": "Bagas Luxury Camp Telaga Menjer - Glamping View Telaga",
+      "orderIndex": 1
+    },
+    {
+      "imageUrl": "/images/villas/4/2.webp",
+      "thumbnailUrl": "/images/villas/4/2.webp",
+      "altText": "Bagas Luxury Camp Telaga Menjer - Panorama Gunung Sindoro",
+      "orderIndex": 2
+    },
+    {
+      "imageUrl": "/images/villas/4/3.webp",
+      "thumbnailUrl": "/images/villas/4/3.webp",
+      "altText": "Bagas Luxury Camp Telaga Menjer - Area Outdoor & Api Unggun",
+      "orderIndex": 3
+    }
+  ],
+  "amenities": [
+    {
+      "name": "View Danau dan Gunung",
+      "description": "View langsung ke Telaga Menjer dan Gunung Sindoro dari setiap balkon villa",
+      "category": "scenery"
+    },
+    {
+      "name": "Free WiFi",
+      "description": "Koneksi internet gratis di area umum dan dalam tenda",
+      "category": "connectivity"
+    },
+    {
+      "name": "Private Balcony",
+      "description": "Setiap unit memiliki balkon pribadi untuk menikmati pemandangan danau",
+      "category": "access"
+    },
+    {
+      "name": "Parking Area",
+      "description": "Area parkir luas dan aman di dekat lokasi camp",
+      "category": "parking"
+    },
+    {
+      "name": "Restaurant Onsite",
+      "description": "Restoran Bagas Camp menyediakan sarapan, makan siang, dan makan malam",
+      "category": "dining"
+    },
+    {
+      "name": "Private Bathroom",
+      "description": "Setiap tenda dilengkapi kamar mandi dalam dengan shower dan air panas",
+      "category": "bathroom"
+    },
+    {
+      "name": "Outdoor Fireplace",
+      "description": "Area api unggun untuk bersantai malam hari di udara pegunungan",
+      "category": "entertainment"
+    }
+  ]
+}

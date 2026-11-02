@@ -1,0 +1,1 @@
+-- ALTER TABLE "villa" ADD COLUMN "has_pool" boolean DEFAULT false NOT NULL;

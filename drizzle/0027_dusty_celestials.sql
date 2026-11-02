@@ -1,0 +1,1 @@
+ALTER TABLE "villa_ownership_claim" ADD COLUMN "verification_code" varchar(5);

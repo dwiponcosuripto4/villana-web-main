@@ -1,0 +1,2 @@
+-- ALTER TABLE "search_index" RENAME COLUMN "villa_slug" TO "slug";--> statement-breakpoint
+-- ALTER TABLE "villa" ADD COLUMN "google_place_id" varchar(100);

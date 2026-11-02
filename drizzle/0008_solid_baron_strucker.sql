@@ -1,0 +1,2 @@
+-- ALTER TABLE "villa" ADD COLUMN "google_rating" numeric(3, 2);--> statement-breakpoint
+-- ALTER TABLE "villa" ADD COLUMN "google_rating_count" integer;

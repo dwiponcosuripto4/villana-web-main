@@ -1,0 +1,2 @@
+-- ALTER TABLE "villa" ADD COLUMN "pvr" numeric(3, 2);--> statement-breakpoint
+-- ALTER TABLE "villa_amenity" ADD COLUMN "score" integer DEFAULT 0;

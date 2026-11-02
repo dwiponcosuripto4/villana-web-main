@@ -1,0 +1,9 @@
+--- CREATE TABLE "villa_last_update" (
+---   "id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+--- 	"villa_id" integer NOT NULL,
+--- 	"last_updated_at" timestamp with time zone,
+--- 	"update_name" varchar(100),
+--- 	"last_value" text
+--- );
+--> statement-breakpoint
+-- ALTER TABLE "villa_last_update" ADD CONSTRAINT "villa_last_update_villa_id_villa_id_fk" FOREIGN KEY ("villa_id") REFERENCES "public"."villa"("id") ON DELETE cascade ON UPDATE no action;

@@ -1,0 +1,1 @@
+ALTER TABLE "place" ADD COLUMN "status" varchar(20) DEFAULT 'draft' NOT NULL;

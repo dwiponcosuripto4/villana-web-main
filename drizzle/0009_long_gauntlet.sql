@@ -1,0 +1,1 @@
+-- ALTER TABLE "villa_last_update" DROP CONSTRAINT "villa_last_update_updated_by_user_id_fk";

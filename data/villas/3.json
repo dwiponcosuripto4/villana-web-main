@@ -1,0 +1,103 @@
+{
+  "villa": {
+    "title": "Mizumi Onsen Villa & Resort",
+    "slug": "mizumi-onsen-villa-wonosobo",
+    "priceMin": "1300",
+    "priceMax": "2500",
+    "unitsCount": 6,
+    "bedroomMin": 1,
+    "bedroomMax": 2,
+    "hasAc": true,
+    "hasBathtub": true,
+    "hasTv": true,
+    "hasBreakfast": true,
+    "description": "Mizumi Onsen Villa & Resort adalah penginapan bernuansa Jepang di Wonosobo yang menawarkan pengalaman unik dengan onsen air panas pribadi dan pemandangan langsung ke Telaga Menjer. Mengusung konsep ryokan modern dengan interior minimalis ala Jepang, setiap villa menyediakan kenyamanan maksimal bagi pasangan atau keluarga yang ingin beristirahat dengan suasana tenang dan sejuk.",
+    "address": "Desa Maron, Kecamatan Garung, Kabupaten Wonosobo, Jawa Tengah, Indonesia",
+    "latitude": "-7.2890",
+    "longitude": "109.9128",
+    "city": "Wonosobo",
+    "province": "Jawa Tengah",
+    "phoneNumber": "+62-813-5561-7777",
+    "status": "published",
+    "googleMapsLink": "https://maps.app.goo.gl/7MPBLT9RWnqQ8SYu9",
+    "googleRating": 4.6,
+    "viewCount": 2784
+  },
+  "images": [
+    {
+      "imageUrl": "/images/villas/3/1.webp",
+      "thumbnailUrl": "/images/villas/3/1.webp",
+      "altText": "Mizumi Onsen Villa Wonosobo - tampilan luar bergaya Jepang",
+      "orderIndex": 1
+    },
+    {
+      "imageUrl": "/images/villas/3/2.webp",
+      "thumbnailUrl": "/images/villas/3/2.webp",
+      "altText": "Mizumi Onsen Villa Wonosobo - kolam air panas pribadi",
+      "orderIndex": 2
+    },
+    {
+      "imageUrl": "/images/villas/3/3.webp",
+      "thumbnailUrl": "/images/villas/3/3.webp",
+      "altText": "Mizumi Onsen Villa Wonosobo - kamar bergaya Jepang",
+      "orderIndex": 3
+    }
+  ],
+  "bedSizes": [
+    {
+      "bedSize": "Queen",
+      "quantity": 4
+    },
+    {
+      "bedSize": "King",
+      "quantity": 2
+    }
+  ],
+  "amenities": [
+    {
+      "name": "Lake View",
+      "description": "Pemandangan langsung ke Telaga Menjer yang indah dan tenang",
+      "category": "scenery"
+    },
+    {
+      "name": "Private Onsen",
+      "description": "Kolam air panas pribadi untuk relaksasi dengan pemandangan alam",
+      "category": "pool"
+    },
+    {
+      "name": "Daily Breakfast",
+      "description": "Sarapan bergaya Jepang dan Nusantara disajikan setiap pagi",
+      "category": "breakfast"
+    },
+    {
+      "name": "Free WiFi",
+      "description": "Akses internet gratis di seluruh area resort",
+      "category": "connectivity"
+    },
+    {
+      "name": "Private Terrace",
+      "description": "Setiap unit memiliki teras pribadi menghadap danau dan pegunungan",
+      "category": "access"
+    },
+    {
+      "name": "Japanese Interior",
+      "description": "Desain kamar dan area umum bernuansa Jepang dengan furnitur kayu minimalis",
+      "category": "entertainment"
+    },
+    {
+      "name": "Parking Area",
+      "description": "Area parkir luas dan aman untuk tamu",
+      "category": "parking"
+    },
+    {
+      "name": "Hot Bathtub",
+      "description": "Bathtub dengan air hangat alami dari sumber pegunungan",
+      "category": "bathroom"
+    },
+    {
+      "name": "Daily Housekeeping",
+      "description": "Layanan kebersihan kamar setiap hari untuk kenyamanan tamu",
+      "category": "housekeeping"
+    }
+  ]
+}
