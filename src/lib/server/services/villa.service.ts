@@ -184,14 +184,16 @@ export class VillaService {
             .select()
             .from(villaImage)
             .where(
-              and(
-                sql`${villaImage.villaId} IN (${sql.join(villaIds.map((id) => sql`${id}`), sql`, `)})`,
-                eq(villaImage.orderIndex, 0),
-              ),
+              sql`${villaImage.villaId} IN (${sql.join(villaIds.map((id) => sql`${id}`), sql`, `)})`,
             )
+            .orderBy(asc(villaImage.orderIndex))
         : [];
 
-    const imageMap = new Map(images.map((img) => [img.villaId, img]));
+    // Keep only the first image (lowest order index) per villa.
+    const imageMap = new Map<number, (typeof images)[number]>();
+    for (const img of images) {
+      if (!imageMap.has(img.villaId)) imageMap.set(img.villaId, img);
+    }
 
     return villas.map((v) => ({
       id: v.id,

@@ -13,7 +13,6 @@
     Menu,
     X,
     LogOut,
-    BarChart3,
     MessageCircle,
     Shield,
     FileText,
@@ -29,7 +28,7 @@
 
   const navigationGroups = [
     {
-      name: "Overview",
+      name: "Villa operations",
       items: [{ name: "Dashboard", href: "/admin", icon: LayoutDashboard }],
     },
     {
@@ -41,7 +40,7 @@
       ],
     },
     {
-      name: "Analytics",
+      name: "Insights",
       items: [
         {
           name: "WhatsApp",
@@ -85,70 +84,80 @@
 </script>
 
 <Toaster />
-<div class="min-h-screen bg-gray-50">
-  <!-- Mobile menu overlay -->
+<div class="min-h-screen bg-cream-50 text-forest-950">
+  <!-- Mobile overlay -->
   {#if sidebarOpen}
     <div
-      class="fixed inset-0 bg-gray-600 bg-opacity-75 z-40 lg:hidden"
+      class="fixed inset-0 z-40 bg-forest-950/50 backdrop-blur-[2px] lg:hidden"
       onclick={closeSidebar}
       onkeydown={(e) => e.key === "Escape" && closeSidebar()}
       role="button"
       tabindex="0"
+      aria-label="Close navigation"
     ></div>
   {/if}
 
   <!-- Sidebar -->
-  <div
-    class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:translate-x-0 {sidebarOpen
+  <aside
+    class="fixed inset-y-0 left-0 z-50 flex w-[268px] flex-col bg-forest-900 text-cream-100 transition-transform duration-300 ease-out lg:translate-x-0 {sidebarOpen
       ? 'translate-x-0'
       : '-translate-x-full'}"
   >
-    <!-- Header with gradient -->
-    <div class="bg-gradient-to-r from-indigo-600 to-indigo-700 px-6 py-4">
-      <div class="flex items-center justify-between">
-        <a
-          href="/"
-          class="flex items-center gap-2 text-white hover:opacity-90 transition-opacity"
+    <!-- Brand -->
+    <div class="flex items-center justify-between gap-3 px-5 pt-6 pb-5">
+      <a href="/admin" class="flex items-center gap-3">
+        <span
+          class="flex h-10 w-10 items-center justify-center rounded-xl border border-gold-400/40 bg-forest-800"
         >
-          <Home size={20} />
-          <span class="text-sm">Back to App</span>
-        </a>
-        <button
-          class="lg:hidden text-white hover:text-gray-200"
-          onclick={closeSidebar}
-        >
-          <X size={20} />
-        </button>
-      </div>
-      <h1 class="text-white text-xl font-bold mt-2">Admin Panel</h1>
+          <Home size={18} class="text-gold-400" />
+        </span>
+        <span class="leading-tight">
+          <span class="block font-serif text-lg tracking-wide text-cream-50">
+            Villana
+          </span>
+          <span
+            class="block text-[9px] uppercase tracking-[0.2em] text-cream-100/40"
+          >
+            Villa management
+          </span>
+        </span>
+      </a>
+      <button
+        class="rounded-md p-1.5 text-cream-100/70 transition-colors hover:bg-white/10 hover:text-cream-50 lg:hidden"
+        onclick={closeSidebar}
+        aria-label="Close navigation"
+      >
+        <X size={18} />
+      </button>
     </div>
 
     <!-- Navigation -->
-    <nav class="px-4 py-6 overflow-y-auto h-full pb-32">
+    <nav class="flex-1 overflow-y-auto px-3 pb-6">
       {#each navigationGroups as group}
-        <div class="mb-6">
-          <h3
-            class="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3"
+        <div class="mb-5">
+          <p
+            class="px-3 pb-2 text-[9px] font-semibold uppercase tracking-[0.2em] text-cream-100/35"
           >
             {group.name}
-          </h3>
-          <ul class="space-y-1">
+          </p>
+          <ul class="space-y-0.5">
             {#each group.items as item}
+              {@const Icon = item.icon}
+              {@const active = isActiveRoute(item.href)}
               <li>
                 <a
                   href={item.href}
-                  class="flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-colors group
-                    {isActiveRoute(item.href)
-                    ? 'bg-indigo-50 text-indigo-900 border-l-4 border-indigo-600'
-                    : 'text-gray-700 hover:bg-gray-50 hover:text-indigo-900'}"
                   onclick={closeSidebar}
+                  aria-current={active ? "page" : undefined}
+                  class="group flex items-center gap-2.5 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors {active
+                    ? 'bg-cream-50 text-forest-950 shadow-sm'
+                    : 'text-cream-100/70 hover:bg-white/10 hover:text-cream-50'}"
                 >
-                  <svelte:component
-                    this={item.icon}
-                    size={18}
-                    class="mr-3 flex-shrink-0 {isActiveRoute(item.href)
-                      ? 'text-indigo-600'
-                      : 'text-gray-400 group-hover:text-indigo-600'}"
+                  <Icon
+                    size={15}
+                    class={active
+                      ? "text-forest-700"
+                      : "text-cream-100/45 group-hover:text-cream-100"}
                   />
                   <span class="truncate">{item.name}</span>
                 </a>
@@ -159,58 +168,62 @@
       {/each}
     </nav>
 
-    <!-- User info at bottom -->
-    <div
-      class="absolute bottom-0 left-0 right-0 border-t border-gray-200 bg-white"
-    >
-      <div class="p-4">
-        <div class="flex items-center justify-between">
-          <div class="flex items-center min-w-0">
-            <div class="flex-shrink-0">
-              <div
-                class="w-9 h-9 bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-full flex items-center justify-center"
-              >
-                <span class="text-sm font-semibold text-white">
-                  {data.user?.username?.charAt(0)?.toUpperCase() || "A"}
-                </span>
-              </div>
-            </div>
-            <div class="ml-3 min-w-0 flex-1">
-              <p class="text-sm font-medium text-gray-900 truncate">
-                {data.user?.username || "Admin"}
-              </p>
-              <p class="text-xs text-indigo-600 font-medium">Administrator</p>
-            </div>
-          </div>
-          <form method="post" action="/admin/logout">
-            <button
-              type="submit"
-              class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-              title="Logout"
-            >
-              <LogOut size={18} />
-            </button>
-          </form>
+    <!-- User -->
+    <div class="border-t border-white/10 p-4">
+      <div class="flex items-center gap-3 rounded-xl bg-white/5 p-3">
+        <span
+          class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gold-500 font-serif text-sm font-semibold text-forest-950"
+        >
+          {data.user?.username?.charAt(0)?.toUpperCase() || "A"}
+        </span>
+        <div class="min-w-0 flex-1">
+          <p class="truncate text-[13px] font-medium text-cream-50">
+            {data.user?.username || "Admin"}
+          </p>
+          <p
+            class="truncate text-[9px] uppercase tracking-[0.16em] text-cream-100/40"
+          >
+            Administrator
+          </p>
         </div>
+        <form method="post" action="/admin/logout">
+          <button
+            type="submit"
+            class="rounded-md p-1.5 text-cream-100/50 transition-colors hover:bg-white/10 hover:text-cream-50"
+            title="Sign out"
+            aria-label="Sign out"
+          >
+            <LogOut size={16} />
+          </button>
+        </form>
       </div>
     </div>
-  </div>
+  </aside>
 
-  <!-- Main content -->
-  <div class="lg:pl-64">
+  <!-- Main -->
+  <div class="lg:pl-[268px]">
     <!-- Mobile header -->
-    <div
-      class="lg:hidden bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between"
+    <header
+      class="sticky top-0 z-30 flex items-center justify-between border-b border-cream-200/70 bg-cream-50/90 px-4 py-3 backdrop-blur lg:hidden"
     >
-      <button class="text-gray-600 hover:text-gray-900" onclick={toggleSidebar}>
-        <Menu size={24} />
+      <button
+        class="rounded-md p-1.5 text-forest-700 transition-colors hover:bg-forest-50"
+        onclick={toggleSidebar}
+        aria-label="Open navigation"
+      >
+        <Menu size={22} />
       </button>
-      <h1 class="text-lg font-bold text-indigo-900">Admin Panel</h1>
-      <div class="w-6"></div>
-      <!-- Spacer for centering -->
-    </div>
+      <span class="font-serif text-lg text-forest-950">Villana</span>
+      <a
+        href="/"
+        class="rounded-md p-1.5 text-forest-700 transition-colors hover:bg-forest-50"
+        aria-label="Back to public site"
+      >
+        <Home size={18} />
+      </a>
+    </header>
 
-    <main class="max-w-7xl mx-auto px-1 md:px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+    <main class="mx-auto max-w-[1440px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
       <slot />
     </main>
   </div>

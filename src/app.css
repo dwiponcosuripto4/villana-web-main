@@ -1,3 +1,33 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+@theme {
+  --font-serif:
+    "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman",
+    serif;
+
+  --color-forest-50: #eef5f1;
+  --color-forest-100: #d8e8e0;
+  --color-forest-200: #b2d1c2;
+  --color-forest-300: #83b29d;
+  --color-forest-400: #519078;
+  --color-forest-500: #2f7059;
+  --color-forest-600: #215947;
+  --color-forest-700: #19473a;
+  --color-forest-800: #123a2f;
+  --color-forest-900: #0d2e25;
+  --color-forest-950: #071f19;
+
+  --color-cream-50: #fbf9f3;
+  --color-cream-100: #f6f2e7;
+  --color-cream-200: #ece5d3;
+  --color-cream-300: #ded3b9;
+
+  --color-gold-50: #fbf6e7;
+  --color-gold-100: #f5ead0;
+  --color-gold-200: #ecd9a8;
+  --color-gold-400: #d8b552;
+  --color-gold-500: #c19a2e;
+  --color-gold-600: #a37f1f;
+}

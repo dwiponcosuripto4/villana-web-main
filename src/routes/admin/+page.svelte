@@ -1,19 +1,22 @@
 <script lang="ts">
   import type { PageData } from "./$types";
+  import { invalidateAll } from "$app/navigation";
+  import { onMount } from "svelte";
   import { formatPrice } from "$lib/utils/format";
   import {
-    Building,
-    CheckCircle,
+    Building2,
+    CheckCircle2,
     Clock,
     Eye,
-    Plus,
-    ClipboardList,
-    Users,
-    ExternalLink,
-    Image,
-    Package,
     MapPin,
     FileText,
+    Newspaper,
+    Plus,
+    RefreshCw,
+    Globe,
+    MessageCircle,
+    Package,
+    Compass,
   } from "lucide-svelte";
 
   interface Props {
@@ -22,351 +25,357 @@
 
   let { data }: Props = $props();
 
-  function formatDate(dateString: string) {
-    return new Date(dateString).toLocaleDateString("en-US", {
+  const stats = $derived(data?.stats);
+  const recentVillas = $derived(data?.recentVillas ?? []);
+
+  let nowLabel = $state("");
+  let refreshing = $state(false);
+
+  onMount(() => {
+    nowLabel = new Date().toLocaleString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+    });
+  });
+
+  async function refresh() {
+    refreshing = true;
+    await invalidateAll();
+    refreshing = false;
+  }
+
+  function num(value: number | undefined | null) {
+    return new Intl.NumberFormat("en-US").format(Number(value) || 0);
+  }
+
+  function pct(part: number, total: number) {
+    if (!total) return 0;
+    return Math.min(100, Math.round((part / total) * 100));
+  }
+
+  function formatDate(date: Date | string) {
+    return new Date(date).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric",
     });
   }
+
+  const metricCards = $derived([
+    {
+      label: "Total villas",
+      value: num(stats?.totalVillas),
+      hint: "in the catalogue",
+      icon: Building2,
+    },
+    {
+      label: "Published",
+      value: num(stats?.published),
+      hint: "live on the site",
+      icon: CheckCircle2,
+    },
+    {
+      label: "Drafts",
+      value: num(stats?.drafts),
+      hint: "awaiting completion",
+      icon: Clock,
+    },
+    {
+      label: "Total views",
+      value: num(stats?.totalViews),
+      hint: "all-time villa views",
+      icon: Eye,
+    },
+    {
+      label: "Total places",
+      value: num(stats?.totalPlaces),
+      hint: "nearby destinations",
+      icon: MapPin,
+    },
+    {
+      label: "Published places",
+      value: num(stats?.publishedPlaces),
+      hint: "visible to visitors",
+      icon: Compass,
+    },
+    {
+      label: "Total posts",
+      value: num(stats?.totalPosts),
+      hint: "blog articles",
+      icon: FileText,
+    },
+    {
+      label: "Published posts",
+      value: num(stats?.publishedPosts),
+      hint: "live articles",
+      icon: Newspaper,
+    },
+  ]);
+
+  const availability = $derived([
+    {
+      label: "Villas",
+      part: stats?.published ?? 0,
+      total: stats?.totalVillas ?? 0,
+    },
+    {
+      label: "Places",
+      part: stats?.publishedPlaces ?? 0,
+      total: stats?.totalPlaces ?? 0,
+    },
+    {
+      label: "Posts",
+      part: stats?.publishedPosts ?? 0,
+      total: stats?.totalPosts ?? 0,
+    },
+  ]);
 </script>
 
-<div class="px-1 md:px-4 py-6 sm:px-0">
-  <!-- Header -->
-  <div class="mb-8">
-    <h1 class="text-3xl font-bold text-gray-900">Dashboard</h1>
-    <p class="mt-2 text-sm text-gray-600">
-      Welcome to the Villa Management System
-    </p>
-  </div>
-
-  <!-- Stats Grid -->
-  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-    <div class="bg-white overflow-hidden shadow rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <Building class="h-8 w-8 text-gray-400" />
-          </div>
-          <div class="ml-5 w-0 flex-1">
-            <dt class="text-sm font-medium text-gray-500 truncate">
-              Total Villas
-            </dt>
-            <dd class="mt-1 text-3xl font-semibold text-gray-900">
-              {data?.stats?.totalVillas || 0}
-            </dd>
-          </div>
-        </div>
-      </div>
+<div class="space-y-6">
+  <!-- Page header -->
+  <div
+    class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between"
+  >
+    <div>
+      <h1 class="text-xl font-semibold tracking-tight text-forest-950">
+        Overview
+      </h1>
+      <p class="mt-1 text-[12px] text-forest-900/50">
+        Villas, places, posts and visitor activity at a glance.
+      </p>
     </div>
 
-    <div class="bg-white overflow-hidden shadow rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <CheckCircle class="h-8 w-8 text-green-400" />
-          </div>
-          <div class="ml-5 w-0 flex-1">
-            <dt class="text-sm font-medium text-gray-500 truncate">
-              Published
-            </dt>
-            <dd class="mt-1 text-3xl font-semibold text-green-600">
-              {data?.stats?.published || 0}
-            </dd>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-white overflow-hidden shadow rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <Clock class="h-8 w-8 text-yellow-400" />
-          </div>
-          <div class="ml-5 w-0 flex-1">
-            <dt class="text-sm font-medium text-gray-500 truncate">Drafts</dt>
-            <dd class="mt-1 text-3xl font-semibold text-yellow-600">
-              {data?.stats?.drafts || 0}
-            </dd>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-white overflow-hidden shadow rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <Eye class="h-8 w-8 text-blue-400" />
-          </div>
-          <div class="ml-5 w-0 flex-1">
-            <dt class="text-sm font-medium text-gray-500 truncate">
-              Total Views
-            </dt>
-            <dd class="mt-1 text-3xl font-semibold text-blue-600">
-              {data?.stats?.totalViews || 0}
-            </dd>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Additional Stats -->
-  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8">
-    <div class="bg-white overflow-hidden shadow rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <MapPin class="h-8 w-8 text-purple-400" />
-          </div>
-          <div class="ml-5 w-0 flex-1">
-            <dt class="text-sm font-medium text-gray-500 truncate">
-              Total Places
-            </dt>
-            <dd class="mt-1 text-3xl font-semibold text-gray-900">
-              {data?.stats?.totalPlaces || 0}
-            </dd>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-white overflow-hidden shadow rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <MapPin class="h-8 w-8 text-purple-600" />
-          </div>
-          <div class="ml-5 w-0 flex-1">
-            <dt class="text-sm font-medium text-gray-500 truncate">
-              Published Places
-            </dt>
-            <dd class="mt-1 text-3xl font-semibold text-purple-600">
-              {data?.stats?.publishedPlaces || 0}
-            </dd>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-white overflow-hidden shadow rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <FileText class="h-8 w-8 text-orange-400" />
-          </div>
-          <div class="ml-5 w-0 flex-1">
-            <dt class="text-sm font-medium text-gray-500 truncate">
-              Total Posts
-            </dt>
-            <dd class="mt-1 text-3xl font-semibold text-gray-900">
-              {data?.stats?.totalPosts || 0}
-            </dd>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="bg-white overflow-hidden shadow rounded-lg">
-      <div class="px-4 py-5 sm:p-6">
-        <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <FileText class="h-8 w-8 text-orange-600" />
-          </div>
-          <div class="ml-5 w-0 flex-1">
-            <dt class="text-sm font-medium text-gray-500 truncate">
-              Published Posts
-            </dt>
-            <dd class="mt-1 text-3xl font-semibold text-orange-600">
-              {data?.stats?.publishedPosts || 0}
-            </dd>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Quick Actions -->
-  <div class="mb-8">
-    <h2 class="text-lg font-medium text-gray-900 mb-4">Quick Actions</h2>
-    <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div class="flex flex-wrap items-center gap-2">
+      {#if nowLabel}
+        <span
+          class="hidden items-center rounded-full border border-cream-200 bg-cream-100/70 px-3 py-2 text-[11px] text-forest-900/55 sm:inline-flex"
+        >
+          {nowLabel}
+        </span>
+      {/if}
+      <button
+        type="button"
+        onclick={refresh}
+        class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-cream-200 bg-white text-forest-700 transition-colors hover:bg-cream-50 disabled:opacity-60"
+        aria-label="Refresh dashboard"
+        title="Refresh dashboard"
+        disabled={refreshing}
+      >
+        <RefreshCw size={15} class={refreshing ? "animate-spin" : ""} />
+      </button>
       <a
         href="/admin/villas/new"
-        class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500 rounded-lg shadow hover:shadow-md transition-shadow"
+        class="inline-flex items-center gap-2 rounded-lg bg-forest-800 px-4 py-2.5 text-[13px] font-medium text-cream-50 shadow-sm transition-colors hover:bg-forest-700"
       >
-        <div>
-          <span
-            class="rounded-lg inline-flex p-3 bg-indigo-50 text-indigo-600 ring-4 ring-white"
-          >
-            <Plus class="h-6 w-6" />
-          </span>
-        </div>
-        <div class="mt-4">
-          <h3 class="text-lg font-medium text-gray-900">Add New Villa</h3>
-          <p class="mt-2 text-sm text-gray-500">
-            Create a new villa listing with photos and details
-          </p>
-        </div>
+        <Plus size={15} />
+        New villa
       </a>
+    </div>
+  </div>
 
-      <a
-        href="/admin/villas"
-        class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500 rounded-lg shadow hover:shadow-md transition-shadow"
-      >
-        <div>
-          <span
-            class="rounded-lg inline-flex p-3 bg-green-50 text-green-600 ring-4 ring-white"
-          >
-            <ClipboardList class="h-6 w-6" />
-          </span>
-        </div>
-        <div class="mt-4">
-          <h3 class="text-lg font-medium text-gray-900">Manage Villas</h3>
-          <p class="mt-2 text-sm text-gray-500">
-            View, edit, and organize all villa listings
-          </p>
-        </div>
-      </a>
+  <!-- Section header -->
+  <div class="flex flex-col gap-3 xl:flex-row xl:items-end xl:justify-between">
+    <div>
+      <h2 class="font-serif text-2xl text-forest-950">Today at Villana</h2>
+      <p class="mt-1 text-[12px] text-forest-900/50">
+        A live summary of the content currently available to visitors.
+      </p>
+    </div>
 
-      <a
-        href="/admin/users"
-        class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500 rounded-lg shadow hover:shadow-md transition-shadow"
-      >
-        <div>
-          <span
-            class="rounded-lg inline-flex p-3 bg-purple-50 text-purple-600 ring-4 ring-white"
-          >
-            <Users class="h-6 w-6" />
-          </span>
-        </div>
-        <div class="mt-4">
-          <h3 class="text-lg font-medium text-gray-900">User Management</h3>
-          <p class="mt-2 text-sm text-gray-500">
-            Manage admin users and permissions
-          </p>
-        </div>
-      </a>
-
+    <div class="flex flex-wrap items-center gap-2">
       <a
         href="/"
         target="_blank"
-        class="relative group bg-white p-6 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-500 rounded-lg shadow hover:shadow-md transition-shadow"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-1.5 rounded-lg border border-cream-200 bg-white px-3 py-2 text-[12px] font-medium text-forest-900/70 transition-colors hover:bg-cream-50 hover:text-forest-950"
       >
-        <div>
-          <span
-            class="rounded-lg inline-flex p-3 bg-blue-50 text-blue-600 ring-4 ring-white"
-          >
-            <ExternalLink class="h-6 w-6" />
-          </span>
-        </div>
-        <div class="mt-4">
-          <h3 class="text-lg font-medium text-gray-900">View Public Site</h3>
-          <p class="mt-2 text-sm text-gray-500">
-            See how your villas appear to visitors
-          </p>
-        </div>
+        <Globe size={14} />
+        Public site
+      </a>
+      <a
+        href="/admin/villas"
+        class="inline-flex items-center gap-1.5 rounded-lg border border-cream-200 bg-white px-3 py-2 text-[12px] font-medium text-forest-900/70 transition-colors hover:bg-cream-50 hover:text-forest-950"
+      >
+        <Building2 size={14} />
+        Manage villas
+      </a>
+      <a
+        href="/admin/analytics/whatsapp"
+        class="inline-flex items-center gap-1.5 rounded-lg border border-cream-200 bg-white px-3 py-2 text-[12px] font-medium text-forest-900/70 transition-colors hover:bg-cream-50 hover:text-forest-950"
+      >
+        <MessageCircle size={14} />
+        WhatsApp analytics
+      </a>
+      <a
+        href="/admin/villas/new"
+        class="inline-flex items-center gap-1.5 rounded-lg bg-forest-800 px-3 py-2 text-[12px] font-medium text-cream-50 shadow-sm transition-colors hover:bg-forest-700"
+      >
+        <Plus size={14} />
+        New villa
       </a>
     </div>
   </div>
 
-  <!-- Recent Villas -->
-  <div class="bg-white shadow overflow-hidden sm:rounded-md">
-    <div class="px-4 py-5 sm:px-6 flex justify-between items-center">
-      <div>
-        <h3 class="text-lg leading-6 font-medium text-gray-900">
-          Recent Villas
-        </h3>
-        <p class="mt-1 max-w-2xl text-sm text-gray-500">Latest villa entries</p>
-      </div>
-      <a
-        href="/admin/villas"
-        class="text-sm text-indigo-600 hover:text-indigo-500"
+  <!-- Metric cards -->
+  <div class="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+    {#each metricCards as card}
+      {@const Icon = card.icon}
+      <div
+        class="rounded-xl border border-cream-200 bg-white p-3.5 shadow-[0_1px_2px_rgba(7,31,25,0.04)] transition-shadow hover:shadow-[0_4px_16px_rgba(7,31,25,0.06)] sm:p-4"
       >
-        View all →
-      </a>
-    </div>
-    <ul class="divide-y divide-gray-200">
-      {#each data?.recentVillas || [] as villa}
-        <li>
-          <a href="/admin/villas/{villa.id}" class="block hover:bg-gray-50">
-            <div class="px-4 py-4 sm:px-6">
-              <div class="flex items-center justify-between">
-                <div class="flex items-center flex-1">
-                  {#if villa.firstImage}
-                    <img
-                      src={villa.firstImage.thumbnailUrl ||
-                        villa.firstImage.imageUrl}
-                      alt={villa.title}
-                      class="h-12 w-12 rounded-lg object-cover mr-4"
-                    />
-                  {:else}
-                    <div
-                      class="h-12 w-12 rounded-lg bg-gray-200 mr-4 flex items-center justify-center"
-                    >
-                      <Image class="h-6 w-6 text-gray-400" />
-                    </div>
-                  {/if}
-                  <div class="flex-1">
-                    <div class="flex items-center justify-between">
-                      <div>
-                        <p class="text-sm font-medium text-indigo-600 truncate">
-                          {villa.title}
-                        </p>
-                        <div
-                          class="mt-1 flex items-center text-sm text-gray-500"
-                        >
-                          <span
-                            >{formatPrice(Number(villa.priceMin))} - {formatPrice(
-                              Number(villa.priceMax),
-                            )}</span
-                          >
-                          <span class="mx-2">•</span>
-                          <span>{villa.bedrooms} BR</span>
-                          <span class="mx-2">•</span>
-                          <span>{villa.viewCount} views</span>
-                        </div>
-                        <p class="mt-1 text-xs text-gray-400">
-                          Created {formatDate(villa.createdAt.toString())}
-                        </p>
-                      </div>
-                      <div class="flex items-center space-x-4">
-                        <span
-                          class={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                            villa.status === "published"
-                              ? "bg-green-100 text-green-800"
-                              : "bg-yellow-100 text-yellow-800"
-                          }`}
-                        >
-                          {villa.status}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </a>
-        </li>
-      {:else}
-        <li class="px-4 py-8 text-center text-gray-500">
-          <Package class="mx-auto h-12 w-12 text-gray-400" />
-          <h3 class="mt-2 text-sm font-medium text-gray-900">No villas yet</h3>
-          <p class="mt-1 text-sm text-gray-500">
-            Get started by creating your first villa listing.
+        <span
+          class="inline-flex h-7 w-7 items-center justify-center rounded-md border border-cream-200 bg-cream-50 text-forest-700"
+        >
+          <Icon size={14} />
+        </span>
+        <p
+          class="mt-3 text-[9px] font-semibold uppercase tracking-[0.16em] text-forest-900/45"
+        >
+          {card.label}
+        </p>
+        <p
+          class="mt-1 text-[22px] leading-none font-semibold tracking-tight text-forest-950 tabular-nums sm:text-[26px]"
+        >
+          {card.value}
+        </p>
+        <p class="mt-1.5 text-[11px] text-forest-900/40">{card.hint}</p>
+      </div>
+    {/each}
+  </div>
+
+  <!-- Detail panels -->
+  <div class="grid grid-cols-1 gap-4 lg:grid-cols-[1.6fr_1fr]">
+    <!-- Recent villas -->
+    <section class="rounded-xl border border-cream-200 bg-white shadow-sm">
+      <div class="flex items-start justify-between gap-3 px-5 pt-5 pb-3">
+        <div>
+          <h3 class="text-[14px] font-semibold text-forest-950">
+            Recent villas
+          </h3>
+          <p class="mt-0.5 text-[11px] text-forest-900/45">
+            Latest additions to the catalogue
           </p>
-          <div class="mt-6">
+        </div>
+        <a
+          href="/admin/villas"
+          class="inline-flex items-center gap-1 text-[11px] font-medium text-forest-700 transition-colors hover:text-forest-950"
+        >
+          View all <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <ul class="divide-y divide-cream-100">
+        {#each recentVillas as villa (villa.id)}
+          <li>
+            <a
+              href="/admin/villas/{villa.id}"
+              class="flex items-center gap-3 px-5 py-3 transition-colors hover:bg-cream-50"
+            >
+              {#if villa.firstImage}
+                <img
+                  src={villa.firstImage.thumbnailUrl || villa.firstImage.imageUrl}
+                  alt={villa.title}
+                  class="h-10 w-10 shrink-0 rounded-lg border border-cream-200 object-cover"
+                />
+              {:else}
+                <span
+                  class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-cream-200 bg-cream-50 text-forest-900/30"
+                >
+                  <Building2 size={16} />
+                </span>
+              {/if}
+
+              <div class="min-w-0 flex-1">
+                <p class="truncate text-[13px] font-medium text-forest-950">
+                  {villa.title}
+                </p>
+                <p class="mt-0.5 truncate text-[11px] text-forest-900/45">
+                  {formatPrice(Number(villa.priceMin))} – {formatPrice(
+                    Number(villa.priceMax),
+                  )} · {villa.bedrooms} BR · {formatDate(villa.createdAt)}
+                </p>
+              </div>
+
+              <span
+                class="shrink-0 rounded-full px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide {villa.status ===
+                'published'
+                  ? 'bg-forest-100 text-forest-700'
+                  : 'bg-gold-100 text-gold-600'}"
+              >
+                {villa.status}
+              </span>
+            </a>
+          </li>
+        {:else}
+          <li class="px-5 py-10 text-center">
+            <Package class="mx-auto h-8 w-8 text-forest-900/20" />
+            <p class="mt-2 text-[13px] font-medium text-forest-950">
+              No villas yet
+            </p>
+            <p class="mt-1 text-[11px] text-forest-900/45">
+              Create your first villa listing to get started.
+            </p>
             <a
               href="/admin/villas/new"
-              class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+              class="mt-4 inline-flex items-center gap-1.5 rounded-lg bg-forest-800 px-3 py-2 text-[12px] font-medium text-cream-50 transition-colors hover:bg-forest-700"
             >
-              <Plus class="-ml-1 mr-2 h-5 w-5" />
-              Add New Villa
+              <Plus size={14} />
+              Add new villa
             </a>
+          </li>
+        {/each}
+      </ul>
+    </section>
+
+    <!-- Content availability -->
+    <section class="rounded-xl border border-cream-200 bg-white shadow-sm">
+      <div class="flex items-start justify-between gap-3 px-5 pt-5 pb-4">
+        <div>
+          <h3 class="text-[14px] font-semibold text-forest-950">
+            Content availability
+          </h3>
+          <p class="mt-0.5 text-[11px] text-forest-900/45">
+            Published versus total entries
+          </p>
+        </div>
+        <span
+          class="rounded-full border border-cream-200 bg-cream-50 px-2 py-0.5 text-[9px] uppercase tracking-wide text-forest-900/45"
+        >
+          Today
+        </span>
+      </div>
+
+      <div class="space-y-4 px-5 pb-5">
+        {#each availability as row}
+          {@const percent = pct(row.part, row.total)}
+          <div>
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="font-medium text-forest-900/70">{row.label}</span>
+              <span class="text-forest-900/40 tabular-nums">
+                {row.part}/{row.total}
+              </span>
+            </div>
+            <div class="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-cream-200">
+              <div
+                class="h-full rounded-full bg-forest-700 transition-[width] duration-500"
+                style="width: {percent}%"
+              ></div>
+            </div>
           </div>
-        </li>
-      {/each}
-    </ul>
+        {/each}
+      </div>
+
+      <div class="border-t border-cream-100 px-5 py-3">
+        <a
+          href="/admin/villas"
+          class="inline-flex items-center gap-1 text-[11px] font-medium text-forest-700 transition-colors hover:text-forest-950"
+        >
+          Review drafts <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </section>
   </div>
 </div>
